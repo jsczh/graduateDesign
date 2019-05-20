@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		id="propertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jdbc.properties"></property>
+	</bean>
+
+	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="basicDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+		<property name="dataSource" ref="basicDataSource"></property>
+		<property name="mapperLocations" value="classpath:com/mapping/*.xml"></property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		id="mapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"></property>
+		<property name="basePackage" value="com.mapper"></property>
+	</bean>
+
+</beans>

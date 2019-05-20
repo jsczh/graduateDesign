@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.bean.Address" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="recipient" property="recipient" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detailAddress" property="detailaddress" jdbcType="VARCHAR" />
+    <result column="zipCode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="cellphone" property="cellphone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, recipient, address, detailAddress, zipCode, cellphone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from address
+		where userId = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Address" >
+    insert into address (id, userId, recipient, 
+      address, detailAddress, zipCode, 
+      cellphone)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{recipient,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{detailaddress,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, 
+      #{cellphone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Address" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="recipient != null" >
+        recipient,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="detailaddress != null" >
+        detailAddress,
+      </if>
+      <if test="zipcode != null" >
+        zipCode,
+      </if>
+      <if test="cellphone != null" >
+        cellphone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="recipient != null" >
+        #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        #{cellphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Address" >
+    update address
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="recipient != null" >
+        recipient = #{recipient,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="detailaddress != null" >
+        detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        zipCode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Address" >
+    update address
+    set userId = #{userid,jdbcType=INTEGER},
+      recipient = #{recipient,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      zipCode = #{zipcode,jdbcType=VARCHAR},
+      cellphone = #{cellphone,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

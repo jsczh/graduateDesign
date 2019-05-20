@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="com.bean.ShoppingCart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="commodityId" property="commodityid" jdbcType="INTEGER" />
+    <result column="commodityTypeId" property="commoditytypeid" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="shopName" property="shopname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, commodityId, commodityTypeId, price, number, shopName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shopping_cart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCommodityIdAndUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shopping_cart
+    where userid = #{param2,jdbcType=INTEGER} 
+    and commodityId = #{param1,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUserIdOrderByShopName" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shopping_cart
+    where userId = #{id,jdbcType=INTEGER}
+    order by shopName
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shopping_cart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCommodityIdAndUserId" parameterType="java.lang.Integer" >
+    delete from shopping_cart
+    where commodityId = #{param1,jdbcType=INTEGER} 
+    and userId = #{param2,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.ShoppingCart" >
+    insert into shopping_cart (id, userId, commodityId, 
+      commodityTypeId, price, number, 
+      shopName)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{commodityid,jdbcType=INTEGER}, 
+      #{commoditytypeid,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, 
+      #{shopname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.ShoppingCart" >
+    insert into shopping_cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="commodityid != null" >
+        commodityId,
+      </if>
+      <if test="commoditytypeid != null" >
+        commodityTypeId,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="shopname != null" >
+        shopName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commodityid != null" >
+        #{commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="commoditytypeid != null" >
+        #{commoditytypeid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null" >
+        #{shopname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.ShoppingCart" >
+    update shopping_cart
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="commodityid != null" >
+        commodityId = #{commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="commoditytypeid != null" >
+        commodityTypeId = #{commoditytypeid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="shopname != null" >
+        shopName = #{shopname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.ShoppingCart" >
+    update shopping_cart
+    set userId = #{userid,jdbcType=INTEGER},
+      commodityId = #{commodityid,jdbcType=INTEGER},
+      commodityTypeId = #{commoditytypeid,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      number = #{number,jdbcType=INTEGER},
+      shopName = #{shopname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

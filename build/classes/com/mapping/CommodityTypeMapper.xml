@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CommodityTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.bean.CommodityType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="commodityId" property="commodityid" jdbcType="INTEGER" />
+    <result column="colorId" property="colorid" jdbcType="INTEGER" />
+    <result column="sizeId" property="sizeid" jdbcType="INTEGER" />
+    <result column="remain" property="remain" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, commodityId, colorId, sizeId, remain
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commodity_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCommodityId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commodity_type
+    where commodityId = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCommodityIdAndColorIdAndSizeId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commodity_type
+    where commodityId = #{param1,jdbcType=INTEGER}
+    <if test="param2 != null" >
+        and colorId = #{param2,jdbcType=INTEGER}
+    </if>
+    <if test="param3 != null" >
+        and sizeId = #{param3,jdbcType=INTEGER}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commodity_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.CommodityType" >
+    insert into commodity_type (id, commodityId, colorId, 
+      sizeId, remain)
+    values (#{id,jdbcType=INTEGER}, #{commodityid,jdbcType=INTEGER}, #{colorid,jdbcType=INTEGER}, 
+      #{sizeid,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.CommodityType" >
+    insert into commodity_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commodityid != null" >
+        commodityId,
+      </if>
+      <if test="colorid != null" >
+        colorId,
+      </if>
+      <if test="sizeid != null" >
+        sizeId,
+      </if>
+      <if test="remain != null" >
+        remain,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commodityid != null" >
+        #{commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="colorid != null" >
+        #{colorid,jdbcType=INTEGER},
+      </if>
+      <if test="sizeid != null" >
+        #{sizeid,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null" >
+        #{remain,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.CommodityType" >
+    update commodity_type
+    <set >
+      <if test="commodityid != null" >
+        commodityId = #{commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="colorid != null" >
+        colorId = #{colorid,jdbcType=INTEGER},
+      </if>
+      <if test="sizeid != null" >
+        sizeId = #{sizeid,jdbcType=INTEGER},
+      </if>
+      <if test="remain != null" >
+        remain = #{remain,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.CommodityType" >
+    update commodity_type
+    set commodityId = #{commodityid,jdbcType=INTEGER},
+      colorId = #{colorid,jdbcType=INTEGER},
+      sizeId = #{sizeid,jdbcType=INTEGER},
+      remain = #{remain,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

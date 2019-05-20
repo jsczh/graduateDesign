@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.bean.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="transactionId" property="transactionid" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="addressId" property="addressid" jdbcType="INTEGER" />
+    <result column="sellerId" property="sellerid" jdbcType="INTEGER" />
+    <result column="totalPrice" property="totalprice" jdbcType="DECIMAL" />
+    <result column="finishTime" property="finishtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, transactionId, state, addressId, sellerId, totalPrice, finishTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectBySellerIdOrderByFinishTime" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_order
+    where sellerId = #{id,jdbcType=INTEGER}
+    order by finishTime
+  </select>
+  <select id="selectBySellerIdOrderByFinishTimeDESC" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from e_order
+    where sellerId = #{id,jdbcType=INTEGER}
+    order by finishTime desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from e_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bean.Order" >
+    insert into e_order (id, transactionId, state, 
+      addressId, sellerId, totalPrice, finishTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{transactionid,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, 
+      #{addressid,jdbcType=INTEGER}, #{sellerid,jdbcType=INTEGER}, #{totalprice,jdbcType=DECIMAL},
+      #{finishtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.Order" useGeneratedKeys="true" keyProperty="id">
+    insert into e_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="transactionid != null" >
+        transactionId,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="addressid != null" >
+        addressId,
+      </if>
+      <if test="sellerid != null" >
+        sellerId,
+      </if>
+      <if test="totalprice != null" >
+        totalPrice,
+      </if>
+      <if test="finishtime != null" >
+        finishTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="transactionid != null" >
+        #{transactionid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null" >
+        #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        #{sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="finishtime != null" >
+        #{finishtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bean.Order" >
+    update e_order
+    <set >
+      <if test="transactionid != null" >
+        transactionId = #{transactionid,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="addressid != null" >
+        addressId = #{addressid,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        sellerId = #{sellerid,jdbcType=INTEGER},
+      </if>
+      <if test="totalprice != null" >
+        totalPrice = #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="finishtime != null" >
+        finishTime = #{finishtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bean.Order" >
+    update e_order
+    set transactionId = #{transactionid,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      addressId = #{addressid,jdbcType=INTEGER},
+      sellerId = #{sellerid,jdbcType=INTEGER},
+      totalPrice = #{totalprice,jdbcType=DECIMAL}
+      finishTime = #{finishtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
